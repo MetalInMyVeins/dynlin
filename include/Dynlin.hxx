@@ -55,6 +55,14 @@ public:
       *(mArr + mSize - nargs + i) = temp[i];
     }
   }
+  T& operator[](ull idx)
+  {
+    return *(mArr + idx);
+  }
+  const T& operator[](ull idx) const
+  {
+    return *(mArr + idx);
+  }
 
 private:
   void realloc(ull n)
