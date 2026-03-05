@@ -6,6 +6,7 @@ TEST(DynlinTest, BraceInit)
 {
   Dynlin<int> arr{1, 2, 3, 4};
   EXPECT_EQ(arr.mSize, 4);
+  EXPECT_EQ(arr.mRealSize, arr.mSize * 2);
   EXPECT_NE(arr.mArr, nullptr);
   EXPECT_EQ(arr.mSize, arr.size());
 }

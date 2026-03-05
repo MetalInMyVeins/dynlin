@@ -16,7 +16,8 @@ public:
   Dynlin(Args&&... args)
   {
     mSize = sizeof...(args);
-    mArr = new T[mSize]{args...};
+    mRealSize = mSize * 2;
+    mArr = new T[mRealSize]{args...};
   }
   ~Dynlin()
   {
@@ -33,6 +34,7 @@ public:
 
 private:
   unsigned long long mSize{};
+  unsigned long long mRealSize{};
   T* mArr{nullptr};
 
 private:
