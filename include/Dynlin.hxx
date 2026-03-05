@@ -24,6 +24,21 @@ public:
     mRealSize = mSize * 2;
     mArr = new T[mRealSize]{args...};
   }
+  Dynlin& operator=(const Dynlin& other)
+  {
+    if (this != &other)
+    {
+      delete[] mArr;
+      mSize = other.mSize;
+      mRealSize = mSize * 2;
+      mArr = new T[mRealSize]{};
+      for (ull i{}; i < mSize; ++i)
+      {
+        *(mArr + i) = *(other.mArr + i);
+      }
+    }
+    return *this;
+  }
   ~Dynlin()
   {
     if (mArr != nullptr)
