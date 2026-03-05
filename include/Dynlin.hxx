@@ -4,7 +4,9 @@
 #ifdef DYNLIN_TESTING
   #define DYNLIN_FRIEND_TESTS \
     FRIEND_TEST(DynlinTest, BraceInit); \
-    FRIEND_TEST(DynlinTest, Realloc);
+    FRIEND_TEST(DynlinTest, Realloc1); \
+    FRIEND_TEST(DynlinTest, Realloc2); \
+    FRIEND_TEST(DynlinTest, PushBack1);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
@@ -33,6 +35,25 @@ public:
   ull size() const
   {
     return mSize;
+  }
+  template<typename... Args>
+  void push_back(Args&&... args)
+  {
+    ull nargs{sizeof...(args)};
+    T temp[]{args...};
+    if (mSize + nargs >= mRealSize)
+    {
+      this->realloc(nargs);
+      mSize += nargs;
+    }
+    else
+    {
+      mSize += nargs;
+    }
+    for (ull i{}; i < nargs; ++i)
+    {
+      *(mArr + mSize - nargs + i) = temp[i];
+    }
   }
 
 private:
