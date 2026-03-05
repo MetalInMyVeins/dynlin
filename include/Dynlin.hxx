@@ -19,26 +19,25 @@ class Dynlin
 public:
   template<typename... Args>
   Dynlin(Args&&... args)
-  {
-    mSize = sizeof...(args);
-    mRealSize = mSize * 2;
-    mArr = new T[mRealSize]{args...};
-  }
+    : mSize{sizeof...(args)},
+      mRealSize{mSize * 2},
+      mArr{new T[mRealSize]{args...}}
+  {}
   Dynlin(Dynlin& other)
+    : mSize{other.mSize},
+      mRealSize{mSize * 2},
+      mArr{new T[mRealSize]{}}
   {
-    mSize = other.mSize;
-    mRealSize = mSize * 2;
-    mArr = new T[mRealSize]{};
     for (ull i{}; i < mSize; ++i)
     {
       *(mArr + i) = *(other.mArr + i);
     }
   }
   Dynlin(const Dynlin& other)
+    : mSize{other.mSize},
+      mRealSize{mSize * 2},
+      mArr{new T[mRealSize]{}}
   {
-    mSize = other.mSize;
-    mRealSize = mSize * 2;
-    mArr = new T[mRealSize]{};
     for (ull i{}; i < mSize; ++i)
     {
       *(mArr + i) = *(other.mArr + i);
