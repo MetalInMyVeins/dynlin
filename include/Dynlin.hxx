@@ -111,6 +111,14 @@ public:
       delete[] mArr;
     mArr = temp;
   }
+  T pop_back()
+  {
+    if (mSize > 0)
+    {
+      --mSize;
+      return *(mArr + mSize);
+    }
+  }
 
 private:
   void realloc(ull n)
