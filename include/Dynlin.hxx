@@ -70,6 +70,10 @@ public:
   {
     return mSize;
   }
+  ull capacity() const
+  {
+    return mRealSize;
+  }
   template<typename... Args>
   void push_back(Args&&... args)
   {
