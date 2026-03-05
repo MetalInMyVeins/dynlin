@@ -97,6 +97,20 @@ public:
   {
     return *(mArr + idx);
   }
+  void reserve(ull n)
+  {
+    if (n <= mSize)
+      return;
+    T* temp{this->allocn(n)};
+    for (ull i{}; i < mSize; ++i)
+    {
+      *(temp + i) = *(mArr + i);
+    }
+    mRealSize = n;
+    if (mArr != nullptr)
+      delete[] mArr;
+    mArr = temp;
+  }
 
 private:
   void realloc(ull n)
@@ -109,6 +123,11 @@ private:
     }
     delete[] mArr;
     mArr = temp;
+  }
+  T* allocn(ull n)
+  {
+    T* temp{new T[n]{}};
+    return temp;
   }
 
 private:
