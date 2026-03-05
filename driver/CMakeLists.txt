@@ -62,10 +62,6 @@ target_link_options(dynlin PRIVATE
   >
 )
 
-target_link_libraries(dynlin PRIVATE
-  libdynlin
-)
-
 if(CMAKE_BUILD_TYPE STREQUAL "Release")
   add_custom_command(
     TARGET dynlin POST_BUILD

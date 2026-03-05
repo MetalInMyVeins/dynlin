@@ -1,4 +1,4 @@
 # Dynlin
 
-Custom `vector<T>` implementation.
+Custom header-only `vector<T>` implementation.
 

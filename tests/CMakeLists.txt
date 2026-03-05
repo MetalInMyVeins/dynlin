@@ -37,7 +37,6 @@ target_compile_options(dynlin_tests PRIVATE
 )
 
 target_link_libraries(dynlin_tests PRIVATE
-  libdynlin
   gtest
   gtest_main
 )
