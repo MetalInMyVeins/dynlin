@@ -3,10 +3,13 @@
 
 #ifdef DYNLIN_TESTING
   #define DYNLIN_FRIEND_TESTS \
-    FRIEND_TEST(DynlinTest, BraceInit);
+    FRIEND_TEST(DynlinTest, BraceInit); \
+    FRIEND_TEST(DynlinTest, Realloc);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
+
+typedef unsigned long long ull;
 
 template<typename T>
 class Dynlin
@@ -27,14 +30,27 @@ public:
       mArr = nullptr;
     }
   }
-  unsigned long long size() const
+  ull size() const
   {
     return mSize;
   }
 
 private:
-  unsigned long long mSize{};
-  unsigned long long mRealSize{};
+  void realloc(ull n)
+  {
+    mRealSize = (mSize + n) * 2;
+    T* temp{new T[mRealSize]{}};
+    for (ull i{}; i < mSize; ++i)
+    {
+      *(temp + i) = *(mArr + i);
+    }
+    delete[] mArr;
+    mArr = temp;
+  }
+
+private:
+  ull mSize{};
+  ull mRealSize{};
   T* mArr{nullptr};
 
 private:
