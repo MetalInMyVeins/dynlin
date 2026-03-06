@@ -83,6 +83,33 @@ public:
     }
     return *this;
   }
+  Dynlin(Dynlin&& other)
+    : mArr{other.mArr},
+      mSize{other.mSize},
+      mRealSize{other.mRealSize}
+  {
+    other.mArr = nullptr;
+    other.mSize = 0;
+    other.mRealSize = 0;
+  }
+  Dynlin& operator=(Dynlin&& other)
+  {
+    if (this != &other)
+    {
+      if (mArr != nullptr)
+      {
+        delete[] mArr;
+      }
+      mArr = other.mArr;
+      mSize = other.mSize;
+      mRealSize = other.mRealSize;
+      
+      other.mArr = nullptr;
+      other.mSize = 0;
+      other.mRealSize = 0;
+    }
+    return *this;
+  }
   ~Dynlin()
   {
     if (mArr != nullptr)
