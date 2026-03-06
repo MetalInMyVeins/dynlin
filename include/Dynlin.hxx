@@ -122,6 +122,8 @@ public:
       --mSize;
       return *(mArr + mSize);
     }
+    else
+      return 0;
   }
   void resize(ull n)
   {
