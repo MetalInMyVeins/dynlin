@@ -141,6 +141,14 @@ public:
       mRealSize = n;
     }
   }
+  T* begin() const
+  {
+    return mArr;
+  }
+  T* end() const
+  {
+    return (mArr + mSize);
+  }
 
 private:
   void realloc(ull n)
