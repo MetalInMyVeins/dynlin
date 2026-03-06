@@ -123,6 +123,24 @@ public:
       return *(mArr + mSize);
     }
   }
+  void resize(ull n)
+  {
+    if (n < mSize)
+      mSize = n;
+    else if (n > mSize)
+    {
+      T* temp{this->allocn(n)};
+      for (ull i{}; i < mSize; ++i)
+      {
+        *(temp + i) = *(mArr + i);
+      }
+      if (mArr != nullptr)
+        delete[] mArr;
+      mArr = temp;
+      mSize = n;
+      mRealSize = n;
+    }
+  }
 
 private:
   void realloc(ull n)
