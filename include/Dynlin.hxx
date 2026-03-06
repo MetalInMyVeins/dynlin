@@ -43,14 +43,36 @@
     FRIEND_TEST(DynlinTest, PopBackUntilEmpty); \
     FRIEND_TEST(DynlinTest, PopBackOnEmpty); \
     FRIEND_TEST(DynlinTest, PopBackMultipleTimes); \
+    FRIEND_TEST(DynlinTest, SubscriptOperator); \
+    FRIEND_TEST(DynlinTest, SubscriptOperatorModify); \
+    FRIEND_TEST(DynlinTest, SubscriptOperatorConst); \
     FRIEND_TEST(DynlinTest, ReserveIncreasesCapacity); \
     FRIEND_TEST(DynlinTest, ReserveLessThanSize); \
     FRIEND_TEST(DynlinTest, ReserveOnEmpty); \
+    FRIEND_TEST(DynlinTest, ReservePreservesData); \
     FRIEND_TEST(DynlinTest, ResizeSmallerReducesSize); \
     FRIEND_TEST(DynlinTest, ResizeLargerIncreasesSize); \
     FRIEND_TEST(DynlinTest, ResizeToZero); \
     FRIEND_TEST(DynlinTest, ResizeSameSize); \
-    FRIEND_TEST(DynlinTest, IteratorOnEmpty);
+    FRIEND_TEST(DynlinTest, BeginEnd); \
+    FRIEND_TEST(DynlinTest, IteratorLoop); \
+    FRIEND_TEST(DynlinTest, IteratorOnModify); \
+    FRIEND_TEST(DynlinTest, IteratorOnEmpty); \
+    FRIEND_TEST(DynlinTest, ConstIterator); \
+    FRIEND_TEST(DynlinTest, SizeMethod); \
+    FRIEND_TEST(DynlinTest, CapacityMethod); \
+    FRIEND_TEST(DynlinTest, DoubleType); \
+    FRIEND_TEST(DynlinTest, StringType); \
+    FRIEND_TEST(DynlinTest, CharType); \
+    FRIEND_TEST(DynlinTest, StressPushBack); \
+    FRIEND_TEST(DynlinTest, StressPushBackMultiple); \
+    FRIEND_TEST(DynlinTest, StressPopBack); \
+    FRIEND_TEST(DynlinTest, StressCopyAndModify); \
+    FRIEND_TEST(DynlinTest, PushBackAfterPopBack); \
+    FRIEND_TEST(DynlinTest, ResizeAfterPushBack); \
+    FRIEND_TEST(DynlinTest, ReserveAfterResize); \
+    FRIEND_TEST(DynlinTest, MultipleAssignments); \
+    FRIEND_TEST(DynlinTest, AssignmentAfterModification);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
