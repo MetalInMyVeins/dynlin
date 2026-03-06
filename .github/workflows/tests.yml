@@ -17,13 +17,13 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake g++ build-essential libgtest-dev
+        sudo apt-get install -y cmake clang build-essential libgtest-dev ninja-build
     
     - name: Configure CMake
-      run: cmake -B build -S .
+      run: cmake -B build -S . -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Debug -DENABLE_SANITIZERS_ADDUB=ON
     
     - name: Build
-      run: cmake --build build
+      run: ninja -C build
     
     - name: Run tests
       run: cd build && ctest --output-on-failure
