@@ -87,7 +87,7 @@ TEST(DynlinTest, CopyConstructorIndependence)
   EXPECT_EQ(copy[0], 99);
 }
 
-// ========== Move Constructor Tests ==========
+// Move Constructor Tests
 
 TEST(DynlinTest, MoveConstructorBasic)
 {
