@@ -10,6 +10,25 @@
     FRIEND_TEST(DynlinTest, CopyConstructorNonConst); \
     FRIEND_TEST(DynlinTest, CopyConstructorConst); \
     FRIEND_TEST(DynlinTest, CopyConstructorEmpty); \
+    FRIEND_TEST(DynlinTest, CopyConstructorIndependence); \
+    FRIEND_TEST(DynlinTest, MoveConstructorBasic); \
+    FRIEND_TEST(DynlinTest, MoveConstructorEmpty); \
+    FRIEND_TEST(DynlinTest, MoveConstructorLarge); \
+    FRIEND_TEST(DynlinTest, MoveConstructorNoDeepCopy); \
+    FRIEND_TEST(DynlinTest, MoveConstructorSourceStillDestructible); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentBasic); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentNoMemoryLeak); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentFromEmpty); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentToEmpty); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentChaining); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentLarge); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentSourceStillUsable); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentMultipleTimes); \
+    FRIEND_TEST(DynlinTest, MoveInVector); \
+    FRIEND_TEST(DynlinTest, MoveAndCopyMixed); \
+    FRIEND_TEST(DynlinTest, MoveAfterOperations); \
+    FRIEND_TEST(DynlinTest, MoveConstructorWithDifferentTypes); \
+    FRIEND_TEST(DynlinTest, MoveAssignmentAfterResize); \
     FRIEND_TEST(DynlinTest, AssignmentOperator); \
     FRIEND_TEST(DynlinTest, AssignmentOperatorChaining); \
     FRIEND_TEST(DynlinTest, Realloc1); \
@@ -48,6 +67,7 @@ public:
       mRealSize{mSize * 2},
       mArr{new T[mRealSize]{args...}}
   {}
+  Dynlin() = default;
   Dynlin(Dynlin& other)
     : mSize{other.mSize},
       mRealSize{mSize * 2},
@@ -84,13 +104,13 @@ public:
     return *this;
   }
   Dynlin(Dynlin&& other)
-    : mArr{other.mArr},
-      mSize{other.mSize},
-      mRealSize{other.mRealSize}
+    : mSize{other.mSize},
+      mRealSize{other.mRealSize},
+      mArr{other.mArr}
   {
-    other.mArr = nullptr;
     other.mSize = 0;
     other.mRealSize = 0;
+    other.mArr = nullptr;
   }
   Dynlin& operator=(Dynlin&& other)
   {
@@ -100,13 +120,13 @@ public:
       {
         delete[] mArr;
       }
-      mArr = other.mArr;
       mSize = other.mSize;
       mRealSize = other.mRealSize;
+      mArr = other.mArr;
       
-      other.mArr = nullptr;
       other.mSize = 0;
       other.mRealSize = 0;
+      other.mArr = nullptr;
     }
     return *this;
   }
