@@ -1,3 +1,4 @@
+#include <memory>
 #include <gtest/gtest.h>
 #define DYNLIN_TESTING
 #include "Dynlin.hxx"
@@ -84,6 +85,312 @@ TEST(DynlinTest, CopyConstructorIndependence)
   copy[0] = 99;
   EXPECT_EQ(original[0], 1);
   EXPECT_EQ(copy[0], 99);
+}
+
+// ========== Move Constructor Tests ==========
+
+TEST(DynlinTest, MoveConstructorBasic)
+{
+  Dynlin<int> original{1, 2, 3, 4, 5};
+  int* originalPtr = original.mArr;
+  ull originalSize = original.mSize;
+  ull originalCapacity = original.mRealSize;
+  
+  Dynlin<int> moved(std::move(original));
+  
+  EXPECT_EQ(moved.mArr, originalPtr);
+  EXPECT_EQ(moved.mSize, originalSize);
+  EXPECT_EQ(moved.mRealSize, originalCapacity);
+  EXPECT_EQ(moved[0], 1);
+  EXPECT_EQ(moved[1], 2);
+  EXPECT_EQ(moved[2], 3);
+  EXPECT_EQ(moved[3], 4);
+  EXPECT_EQ(moved[4], 5);
+  
+  EXPECT_EQ(original.mArr, nullptr);
+  EXPECT_EQ(original.mSize, 0);
+  EXPECT_EQ(original.mRealSize, 0);
+}
+
+TEST(DynlinTest, MoveConstructorEmpty)
+{
+  Dynlin<int> original;
+  
+  Dynlin<int> moved(std::move(original));
+  
+  EXPECT_EQ(moved.mArr, nullptr);
+  EXPECT_EQ(moved.mSize, 0);
+  EXPECT_EQ(moved.mRealSize, 0);
+  
+  EXPECT_EQ(original.mArr, nullptr);
+  EXPECT_EQ(original.mSize, 0);
+  EXPECT_EQ(original.mRealSize, 0);
+}
+
+TEST(DynlinTest, MoveConstructorLarge)
+{
+  Dynlin<int> original;
+  for (int i = 0; i < 100; ++i)
+  {
+    original.push_back(i);
+  }
+  
+  int* originalPtr = original.mArr;
+  
+  Dynlin<int> moved(std::move(original));
+  
+  EXPECT_EQ(moved.mArr, originalPtr);
+  EXPECT_EQ(moved.mSize, 100);
+  
+  for (unsigned long long i = 0; i < 100; ++i)
+  {
+    EXPECT_EQ(moved[i], i);
+  }
+  
+  EXPECT_EQ(original.mArr, nullptr);
+  EXPECT_EQ(original.mSize, 0);
+}
+
+TEST(DynlinTest, MoveConstructorNoDeepCopy)
+{
+  Dynlin<int> original{10, 20, 30};
+  int* originalPtr = original.mArr;
+  
+  Dynlin<int> moved(std::move(original));
+  
+  EXPECT_EQ(moved.mArr, originalPtr);
+}
+
+TEST(DynlinTest, MoveConstructorSourceStillDestructible)
+{
+  Dynlin<int>* original = new Dynlin<int>{1, 2, 3, 4};
+  
+  Dynlin<int> moved(std::move(*original));
+  
+  delete original;
+  
+  EXPECT_EQ(moved.size(), 4);
+  EXPECT_EQ(moved[0], 1);
+}
+
+// Move Assignment Operator Tests
+
+TEST(DynlinTest, MoveAssignmentBasic)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  Dynlin<int> arr2{4, 5, 6, 7, 8};
+  
+  int* arr2Ptr = arr2.mArr;
+  ull arr2Size = arr2.mSize;
+  
+  arr1 = std::move(arr2);
+  
+  EXPECT_EQ(arr1.mArr, arr2Ptr);
+  EXPECT_EQ(arr1.mSize, arr2Size);
+  EXPECT_EQ(arr1[0], 4);
+  EXPECT_EQ(arr1[1], 5);
+  EXPECT_EQ(arr1[2], 6);
+  EXPECT_EQ(arr1[3], 7);
+  EXPECT_EQ(arr1[4], 8);
+  
+  EXPECT_EQ(arr2.mArr, nullptr);
+  EXPECT_EQ(arr2.mSize, 0);
+  EXPECT_EQ(arr2.mRealSize, 0);
+}
+
+TEST(DynlinTest, MoveAssignmentNoMemoryLeak)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  int* arr1OldPtr = arr1.mArr;
+  
+  Dynlin<int> arr2{4, 5, 6, 7};
+  int* arr2Ptr = arr2.mArr;
+  
+  arr1 = std::move(arr2);
+  
+  EXPECT_NE(arr1.mArr, arr1OldPtr);
+  EXPECT_EQ(arr1.mArr, arr2Ptr);
+}
+
+TEST(DynlinTest, MoveAssignmentFromEmpty)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  Dynlin<int> arr2;
+  
+  arr1 = std::move(arr2);
+  
+  EXPECT_EQ(arr1.mArr, nullptr);
+  EXPECT_EQ(arr1.mSize, 0);
+  EXPECT_EQ(arr1.mRealSize, 0);
+}
+
+TEST(DynlinTest, MoveAssignmentToEmpty)
+{
+  Dynlin<int> arr1;
+  Dynlin<int> arr2{1, 2, 3};
+  
+  int* arr2Ptr = arr2.mArr;
+  
+  arr1 = std::move(arr2);
+  
+  EXPECT_EQ(arr1.mArr, arr2Ptr);
+  EXPECT_EQ(arr1.mSize, 3);
+  EXPECT_EQ(arr1[0], 1);
+  EXPECT_EQ(arr1[1], 2);
+  EXPECT_EQ(arr1[2], 3);
+  
+  EXPECT_EQ(arr2.mArr, nullptr);
+  EXPECT_EQ(arr2.mSize, 0);
+}
+
+TEST(DynlinTest, MoveAssignmentChaining)
+{
+  Dynlin<int> arr1{1, 2};
+  Dynlin<int> arr2{3, 4};
+  Dynlin<int> arr3{5, 6, 7};
+  
+  int* arr3Ptr = arr3.mArr;
+  
+  arr1 = arr2 = std::move(arr3);
+  
+  EXPECT_EQ(arr2.mArr, arr3Ptr);
+  EXPECT_EQ(arr2.mSize, 3);
+  
+  EXPECT_NE(arr1.mArr, arr2.mArr);
+  EXPECT_EQ(arr1.mSize, 3);
+  EXPECT_EQ(arr1[0], 5);
+  EXPECT_EQ(arr1[1], 6);
+  EXPECT_EQ(arr1[2], 7);
+}
+
+TEST(DynlinTest, MoveAssignmentLarge)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  Dynlin<int> arr2;
+  
+  for (int i = 0; i < 1000; ++i)
+  {
+    arr2.push_back(i);
+  }
+  
+  int* arr2Ptr = arr2.mArr;
+  
+  arr1 = std::move(arr2);
+  
+  EXPECT_EQ(arr1.mArr, arr2Ptr);
+  EXPECT_EQ(arr1.mSize, 1000);
+  
+  for (unsigned long long i = 0; i < 1000; ++i)
+  {
+    EXPECT_EQ(arr1[i], i);
+  }
+  
+  EXPECT_EQ(arr2.mArr, nullptr);
+  EXPECT_EQ(arr2.mSize, 0);
+}
+
+TEST(DynlinTest, MoveAssignmentSourceStillUsable)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  Dynlin<int> arr2{4, 5, 6};
+  
+  arr1 = std::move(arr2);
+  
+  arr2.push_back(100);
+  EXPECT_EQ(arr2.size(), 1);
+  EXPECT_EQ(arr2[0], 100);
+}
+
+TEST(DynlinTest, MoveAssignmentMultipleTimes)
+{
+  Dynlin<int> arr1{1, 2};
+  Dynlin<int> arr2{3, 4, 5};
+  Dynlin<int> arr3{6, 7, 8, 9};
+  
+  arr1 = std::move(arr2);
+  EXPECT_EQ(arr1.size(), 3);
+  EXPECT_EQ(arr1[0], 3);
+  
+  arr1 = std::move(arr3);
+  EXPECT_EQ(arr1.size(), 4);
+  EXPECT_EQ(arr1[0], 6);
+}
+
+// Move Semantics Integration Tests
+
+TEST(DynlinTest, MoveInVector)
+{
+  {
+    Dynlin<int> arr1{1, 2, 3};
+    Dynlin<int> arr2(std::move(arr1));
+  }
+  SUCCEED();
+}
+
+TEST(DynlinTest, MoveAndCopyMixed)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  Dynlin<int> arr2(std::move(arr1));
+  Dynlin<int> arr3(arr2);
+  Dynlin<int> arr4{4, 5};
+  arr4 = std::move(arr3);
+  
+  EXPECT_EQ(arr2.size(), 3);
+  EXPECT_EQ(arr2[0], 1);
+  EXPECT_EQ(arr4.size(), 3);
+  EXPECT_EQ(arr4[0], 1);
+  
+  EXPECT_EQ(arr1.mArr, nullptr);
+  EXPECT_EQ(arr3.mArr, nullptr);
+}
+
+TEST(DynlinTest, MoveAfterOperations)
+{
+  Dynlin<int> arr1{1, 2, 3};
+  arr1.push_back(4, 5, 6);
+  arr1.pop_back();
+  arr1.reserve(50);
+  
+  int* ptr = arr1.mArr;
+  ull size = arr1.mSize;
+  
+  Dynlin<int> arr2(std::move(arr1));
+  
+  EXPECT_EQ(arr2.mArr, ptr);
+  EXPECT_EQ(arr2.mSize, size);
+  EXPECT_EQ(arr1.mArr, nullptr);
+}
+
+TEST(DynlinTest, MoveConstructorWithDifferentTypes)
+{
+  Dynlin<double> arr1{1.1, 2.2, 3.3};
+  double* ptr = arr1.mArr;
+  
+  Dynlin<double> arr2(std::move(arr1));
+  
+  EXPECT_EQ(arr2.mArr, ptr);
+  EXPECT_DOUBLE_EQ(arr2[0], 1.1);
+  EXPECT_DOUBLE_EQ(arr2[1], 2.2);
+  EXPECT_DOUBLE_EQ(arr2[2], 3.3);
+  
+  EXPECT_EQ(arr1.mArr, nullptr);
+}
+
+TEST(DynlinTest, MoveAssignmentAfterResize)
+{
+  Dynlin<int> arr1{1, 2, 3, 4, 5};
+  arr1.resize(3);
+  
+  Dynlin<int> arr2{10, 20};
+  int* arr1Ptr = arr1.mArr;
+  
+  arr2 = std::move(arr1);
+  
+  EXPECT_EQ(arr2.mArr, arr1Ptr);
+  EXPECT_EQ(arr2.size(), 3);
+  EXPECT_EQ(arr2[0], 1);
+  EXPECT_EQ(arr2[1], 2);
+  EXPECT_EQ(arr2[2], 3);
 }
 
 // Assignment Operator Tests
