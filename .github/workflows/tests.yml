@@ -20,7 +20,7 @@ jobs:
         sudo apt-get install -y cmake clang build-essential libgtest-dev ninja-build
     
     - name: Configure CMake
-      run: cmake -B build -S . -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Debug -DENABLE_SANITIZERS_ADDUB=ON
+      run: cmake -B build -S . -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_BUILD_TYPE=Debug -DENABLE_SANITIZERS_ADDUB=ON
     
     - name: Build
       run: ninja -C build
