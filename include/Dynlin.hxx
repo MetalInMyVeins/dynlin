@@ -4,9 +4,34 @@
 #ifdef DYNLIN_TESTING
   #define DYNLIN_FRIEND_TESTS \
     FRIEND_TEST(DynlinTest, BraceInit); \
+    FRIEND_TEST(DynlinTest, EmptyConstruction); \
+    FRIEND_TEST(DynlinTest, SingleElementInit); \
+    FRIEND_TEST(DynlinTest, LargeInit); \
+    FRIEND_TEST(DynlinTest, CopyConstructorNonConst); \
+    FRIEND_TEST(DynlinTest, CopyConstructorConst); \
+    FRIEND_TEST(DynlinTest, CopyConstructorEmpty); \
+    FRIEND_TEST(DynlinTest, AssignmentOperator); \
+    FRIEND_TEST(DynlinTest, AssignmentOperatorChaining); \
     FRIEND_TEST(DynlinTest, Realloc1); \
     FRIEND_TEST(DynlinTest, Realloc2); \
-    FRIEND_TEST(DynlinTest, PushBack1);
+    FRIEND_TEST(DynlinTest, ReallocPreservesData); \
+    FRIEND_TEST(DynlinTest, PushBack1); \
+    FRIEND_TEST(DynlinTest, PushBackToEmpty); \
+    FRIEND_TEST(DynlinTest, PushBackMultipleToEmpty); \
+    FRIEND_TEST(DynlinTest, PushBackTriggersRealloc); \
+    FRIEND_TEST(DynlinTest, PushBackLarge); \
+    FRIEND_TEST(DynlinTest, PopBackNormal); \
+    FRIEND_TEST(DynlinTest, PopBackUntilEmpty); \
+    FRIEND_TEST(DynlinTest, PopBackOnEmpty); \
+    FRIEND_TEST(DynlinTest, PopBackMultipleTimes); \
+    FRIEND_TEST(DynlinTest, ReserveIncreasesCapacity); \
+    FRIEND_TEST(DynlinTest, ReserveLessThanSize); \
+    FRIEND_TEST(DynlinTest, ReserveOnEmpty); \
+    FRIEND_TEST(DynlinTest, ResizeSmallerReducesSize); \
+    FRIEND_TEST(DynlinTest, ResizeLargerIncreasesSize); \
+    FRIEND_TEST(DynlinTest, ResizeToZero); \
+    FRIEND_TEST(DynlinTest, ResizeSameSize); \
+    FRIEND_TEST(DynlinTest, IteratorOnEmpty);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
