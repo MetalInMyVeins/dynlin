@@ -39,6 +39,7 @@
     FRIEND_TEST(DynlinTest, PushBackMultipleToEmpty); \
     FRIEND_TEST(DynlinTest, PushBackTriggersRealloc); \
     FRIEND_TEST(DynlinTest, PushBackLarge); \
+    FRIEND_TEST(DynlinTest, PushPopString); \
     FRIEND_TEST(DynlinTest, PopBackNormal); \
     FRIEND_TEST(DynlinTest, PopBackUntilEmpty); \
     FRIEND_TEST(DynlinTest, PopBackOnEmpty); \
@@ -234,7 +235,7 @@ public:
       return *(mArr + mSize);
     }
     else
-      return 0;
+      return T{};
   }
   void resize(ull n)
   {
