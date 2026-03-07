@@ -88,7 +88,7 @@ public:
   Dynlin(Args&&... args)
     : mSize{sizeof...(args)},
       mRealSize{mSize * 2},
-      mArr{new T[mRealSize]{args...}}
+      mArr{new T[mRealSize]{static_cast<T>(args)...}}
   {}
   Dynlin(Dynlin& other)
     : mSize{other.mSize},
@@ -187,7 +187,7 @@ public:
   void push_back(Args&&... args)
   {
     ull nargs{sizeof...(args)};
-    T temp[]{args...};
+    T temp[]{static_cast<T>(args)...};
     if (mSize + nargs >= mRealSize)
     {
       this->realloc(nargs);
