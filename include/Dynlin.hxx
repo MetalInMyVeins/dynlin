@@ -55,6 +55,7 @@
     FRIEND_TEST(DynlinTest, ResizeLargerIncreasesSize); \
     FRIEND_TEST(DynlinTest, ResizeToZero); \
     FRIEND_TEST(DynlinTest, ResizeSameSize); \
+    FRIEND_TEST(DynlinTest, ResizeFillBasic); \
     FRIEND_TEST(DynlinTest, BeginEnd); \
     FRIEND_TEST(DynlinTest, IteratorLoop); \
     FRIEND_TEST(DynlinTest, IteratorOnModify); \
@@ -248,6 +249,32 @@ public:
       for (ull i{}; i < mSize; ++i)
       {
         *(temp + i) = *(mArr + i);
+      }
+      for (ull i{mSize}; i < n; ++i)
+      {
+        *(temp + i) = T{};
+      }
+      if (mArr != nullptr)
+        delete[] mArr;
+      mArr = temp;
+      mSize = n;
+      mRealSize = n;
+    }
+  }
+  void resize(ull n, const T& fillval)
+  {
+    if (n < mSize)
+      mSize = n;
+    else if (n > mSize)
+    {
+      T* temp{this->allocn(n)};
+      for (ull i{}; i < mSize; ++i)
+      {
+        *(temp + i) = *(mArr + i);
+      }
+      for (ull i{mSize}; i < n; ++i)
+      {
+        *(temp + i) = fillval;
       }
       if (mArr != nullptr)
         delete[] mArr;
