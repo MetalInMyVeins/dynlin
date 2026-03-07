@@ -529,6 +529,18 @@ TEST(DynlinTest, PushBackLarge)
   }
 }
 
+TEST(DynlinTest, PushPopString)
+{
+  Dynlin<std::string> animals{"cow", "cat", "dog", "ass"};
+  EXPECT_EQ(animals.size(), 4);
+  EXPECT_EQ(animals.pop_back(), "ass");
+  animals.push_back("whale");
+  animals.push_back("donkey");
+  animals.push_back("kong");
+  EXPECT_EQ(animals.pop_back(), "kong");
+  EXPECT_EQ(animals.size(), 5);
+}
+
 // Pop Back Tests
 
 TEST(DynlinTest, PopBackNormal)
