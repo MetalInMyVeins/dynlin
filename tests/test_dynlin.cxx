@@ -712,6 +712,18 @@ TEST(DynlinTest, ResizeSameSize)
   EXPECT_EQ(arr.mSize, oldSize);
 }
 
+TEST(DynlinTest, ResizeFillBasic)
+{
+  Dynlin<std::string> x{"cat", "dog", "cow"};
+  x.resize(6, "donkey");
+  EXPECT_EQ(x[0], "cat");
+  EXPECT_EQ(x[1], "dog");
+  EXPECT_EQ(x[2], "cow");
+  EXPECT_EQ(x[3], "donkey");
+  EXPECT_EQ(x[4], "donkey");
+  EXPECT_EQ(x[5], "donkey");
+}
+
 // Iterator Tests
 
 TEST(DynlinTest, BeginEnd)
