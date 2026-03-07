@@ -944,3 +944,25 @@ TEST(DynlinTest, AssignmentAfterModification)
   EXPECT_EQ(arr1[1], 5);
 }
 
+TEST(DynlinTest, EmptyBasic)
+{
+  Dynlin<float> x{};
+  EXPECT_EQ(x.empty(), true);
+  x.push_back(3.4, 3, 6.99);
+  x.pop_back();
+  x.pop_back();
+  x.pop_back();
+  EXPECT_EQ(x.empty(), true);
+  x = {5, 6, 7, 8, 4, 5, 7};
+  EXPECT_EQ(x.size(), 7);
+  EXPECT_EQ(x.empty(), false);
+  x.pop_back();
+  x.pop_back();
+  x.pop_back();
+  x.pop_back();
+  x.pop_back();
+  x.pop_back();
+  x.pop_back();
+  EXPECT_EQ(x.empty(), true);
+}
+
