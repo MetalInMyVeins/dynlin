@@ -276,5 +276,8 @@ private:
   DYNLIN_FRIEND_TESTS
 };
 
+template<typename T>
+using Vector = Dynlin<T>;
+
 #endif
 
