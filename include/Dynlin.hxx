@@ -214,6 +214,16 @@ public:
       *(mArr + mSize - nargs + i) = temp[i];
     }
   }
+  T pop_back()
+  {
+    if (mSize > 0)
+    {
+      --mSize;
+      return *(mArr + mSize);
+    }
+    else
+      return T{};
+  }
   void reserve(ull n)
   {
     if (n <= mSize)
@@ -227,16 +237,6 @@ public:
     if (mArr != nullptr)
       delete[] mArr;
     mArr = temp;
-  }
-  T pop_back()
-  {
-    if (mSize > 0)
-    {
-      --mSize;
-      return *(mArr + mSize);
-    }
-    else
-      return T{};
   }
   void resize(ull n)
   {
