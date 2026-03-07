@@ -989,3 +989,14 @@ TEST(DynlinTest, ClearInt)
   EXPECT_EQ(x.mArr, nullptr);
 }
 
+TEST(DynlinTest, ClearString)
+{
+  Dynlin<std::string> x{"man", "woman", "child"};
+  EXPECT_EQ(x.size(), 3);
+  EXPECT_EQ(x.pop_back(), "child");
+  x.clear();
+  EXPECT_EQ(x.size(), 0);
+  EXPECT_EQ(x.capacity(), 0);
+  EXPECT_EQ(x.mArr, nullptr);
+}
+
