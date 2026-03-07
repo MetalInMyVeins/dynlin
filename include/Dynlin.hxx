@@ -83,13 +83,13 @@ template<typename T>
 class Dynlin
 {
 public:
+  Dynlin() = default;
   template<typename... Args>
   Dynlin(Args&&... args)
     : mSize{sizeof...(args)},
       mRealSize{mSize * 2},
       mArr{new T[mRealSize]{args...}}
   {}
-  Dynlin() = default;
   Dynlin(Dynlin& other)
     : mSize{other.mSize},
       mRealSize{mSize * 2},
@@ -163,6 +163,14 @@ public:
       mArr = nullptr;
     }
   }
+  T& operator[](ull idx)
+  {
+    return *(mArr + idx);
+  }
+  const T& operator[](ull idx) const
+  {
+    return *(mArr + idx);
+  }
   ull size() const
   {
     return mSize;
@@ -189,14 +197,6 @@ public:
     {
       *(mArr + mSize - nargs + i) = temp[i];
     }
-  }
-  T& operator[](ull idx)
-  {
-    return *(mArr + idx);
-  }
-  const T& operator[](ull idx) const
-  {
-    return *(mArr + idx);
   }
   void reserve(ull n)
   {
