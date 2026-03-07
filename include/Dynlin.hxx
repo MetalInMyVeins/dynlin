@@ -73,7 +73,8 @@
     FRIEND_TEST(DynlinTest, ReserveAfterResize); \
     FRIEND_TEST(DynlinTest, MultipleAssignments); \
     FRIEND_TEST(DynlinTest, AssignmentAfterModification); \
-    FRIEND_TEST(DynlinTest, EmptyBasic);
+    FRIEND_TEST(DynlinTest, EmptyBasic); \
+    FRIEND_TEST(DynlinTest, ClearInt);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif

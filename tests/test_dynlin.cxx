@@ -966,3 +966,14 @@ TEST(DynlinTest, EmptyBasic)
   EXPECT_EQ(x.empty(), true);
 }
 
+TEST(DynlinTest, ClearInt)
+{
+  Dynlin<int> x{3, 4, 5, 6};
+  EXPECT_EQ(x.size(), 4);
+  EXPECT_EQ(x.pop_back(), 6);
+  x.clear();
+  EXPECT_EQ(x.size(), 0);
+  EXPECT_EQ(x.capacity(), 0);
+  EXPECT_EQ(x.mArr, nullptr);
+}
+
