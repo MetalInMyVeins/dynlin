@@ -70,6 +70,7 @@
     FRIEND_TEST(DynlinTest, StressPushBackMultiple); \
     FRIEND_TEST(DynlinTest, StressPopBack); \
     FRIEND_TEST(DynlinTest, StressCopyAndModify); \
+    FRIEND_TEST(DynlinTest, StressPushPopResize); \
     FRIEND_TEST(DynlinTest, PushBackAfterPopBack); \
     FRIEND_TEST(DynlinTest, ResizeAfterPushBack); \
     FRIEND_TEST(DynlinTest, ReserveAfterResize); \

@@ -905,6 +905,29 @@ TEST(DynlinTest, StressCopyAndModify)
   }
 }
 
+TEST(DynlinTest, StressPushPopResize)
+{
+  Dynlin<double> x{1233453.89, 2.32323, 332423.342, 3242.2342, 46353.2342, 190594.234156};
+  x.push_back(9.3434);
+  x.push_back(3.4);
+  x.push_back(8998.2344);
+  x.push_back(55.56);
+  x.push_back(65.82);
+  x.pop_back();
+  x.push_back(111111.3434343);
+  x.push_back(22.23);
+  x.push_back(3434);
+  x.push_back(34);
+  x.push_back(56);
+  x.push_back(3234.3250134);
+  x.resize(512000, 512343434.987987);
+  for (auto& e : x)
+    e = 11.11111;
+  EXPECT_EQ(x.size(), 512000);
+  for (const auto& e : x)
+    EXPECT_EQ(e, 11.11111);
+}
+
 // Edge Cases
 
 TEST(DynlinTest, PushBackAfterPopBack)
