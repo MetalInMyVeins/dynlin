@@ -93,7 +93,7 @@ public:
   Dynlin(Dynlin& other)
     : mSize{other.mSize},
       mRealSize{mSize * 2},
-      mArr{new T[mRealSize]{}}
+      mArr{new T[mRealSize]}
   {
     for (ull i{}; i < mSize; ++i)
     {
@@ -103,7 +103,7 @@ public:
   Dynlin(const Dynlin& other)
     : mSize{other.mSize},
       mRealSize{mSize * 2},
-      mArr{new T[mRealSize]{}}
+      mArr{new T[mRealSize]}
   {
     for (ull i{}; i < mSize; ++i)
     {
@@ -120,7 +120,7 @@ public:
       }
       mSize = other.mSize;
       mRealSize = mSize * 2;
-      mArr = new T[mRealSize]{};
+      mArr = new T[mRealSize];
       for (ull i{}; i < mSize; ++i)
       {
         *(mArr + i) = *(other.mArr + i);
@@ -142,9 +142,7 @@ public:
     if (this != &other)
     {
       if (mArr != nullptr)
-      {
         delete[] mArr;
-      }
       mSize = other.mSize;
       mRealSize = other.mRealSize;
       mArr = other.mArr;
@@ -253,17 +251,18 @@ private:
   void realloc(ull n)
   {
     mRealSize = (mSize + n) * 2;
-    T* temp{new T[mRealSize]{}};
+    T* temp{new T[mRealSize]};
     for (ull i{}; i < mSize; ++i)
     {
       *(temp + i) = *(mArr + i);
     }
-    delete[] mArr;
+    if (mArr != nullptr)
+      delete[] mArr;
     mArr = temp;
   }
   T* allocn(ull n)
   {
-    T* temp{new T[n]{}};
+    T* temp{new T[n]};
     return temp;
   }
 
