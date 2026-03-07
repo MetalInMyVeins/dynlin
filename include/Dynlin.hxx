@@ -184,6 +184,14 @@ public:
       return true;
     return false;
   }
+  void clear()
+  {
+    if (mArr != nullptr)
+      delete[] mArr;
+    mArr = nullptr;
+    mSize = 0;
+    mRealSize = 0;
+  }
   template<typename... Args>
   void push_back(Args&&... args)
   {
