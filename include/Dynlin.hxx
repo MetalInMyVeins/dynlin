@@ -177,6 +177,12 @@ public:
   {
     return mRealSize;
   }
+  bool empty() const
+  {
+    if (mSize == 0)
+      return true;
+    return false;
+  }
   template<typename... Args>
   void push_back(Args&&... args)
   {
