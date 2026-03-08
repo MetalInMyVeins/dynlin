@@ -5,7 +5,11 @@ set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 
 add_executable(dynlin_tests
-  test_dynlin.cxx
+  test_set1.cxx
+  test_set2.cxx
+  test_set3.cxx
+  test_set4.cxx
+  test_set5.cxx
 )
 
 target_include_directories(dynlin_tests PRIVATE
