@@ -1041,3 +1041,12 @@ TEST(DynlinTest, OpSubsIllegalIndex)
   EXPECT_DEATH(x[123], ".*");
 }
 
+TEST(DynlinTest, OpEqEqBasic)
+{
+  Vector<std::string> v1{"cat", "dog", "cow"};
+  Vector<std::string> v2{"cat", "dog", "cow"};
+  EXPECT_EQ(v1 == v2, true);
+  v2.pop_back();
+  EXPECT_NE(v1 == v2, true);
+}
+

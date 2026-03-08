@@ -80,6 +80,7 @@
     FRIEND_TEST(DynlinTest, ClearInt); \
     FRIEND_TEST(DynlinTest, ClearString); \
     FRIEND_TEST(DynlinTest, OpSubsIllegalIndex); \
+    FRIEND_TEST(DynlinTest, OpEqEqBasic); \
     FRIEND_TEST(DynlinTest, ExtractBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
@@ -179,6 +180,18 @@ public:
   {
     assert(idx < mSize && "out of bound access is illegal");
     return *(mArr + idx);
+  }
+  bool operator==(const Dynlin<T>& other) const
+  {
+    if (mSize != other.size())
+      return false;
+
+    for (size_t i{}; i < mSize; ++i)
+    {
+      if (*(mArr + i) != other[i])
+        return false;
+    }
+    return true;
   }
   size_t size() const
   {
