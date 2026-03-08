@@ -81,6 +81,7 @@
     FRIEND_TEST(DynlinTest, ClearString); \
     FRIEND_TEST(DynlinTest, OpSubsIllegalIndex); \
     FRIEND_TEST(DynlinTest, OpEqEqBasic); \
+    FRIEND_TEST(DynlinTest, OpNeqBasic); \
     FRIEND_TEST(DynlinTest, ExtractBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
@@ -192,6 +193,15 @@ public:
         return false;
     }
     return true;
+  }
+  bool operator!=(const Dynlin<T>& other) const
+  {
+    for (size_t i{}; i < mSize; ++i)
+    {
+      if (*(mArr + i) != other[i])
+        return true;
+    }
+    return false;
   }
   size_t size() const
   {

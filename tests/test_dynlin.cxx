@@ -1050,3 +1050,13 @@ TEST(DynlinTest, OpEqEqBasic)
   EXPECT_NE(v1 == v2, true);
 }
 
+TEST(DynlinTest, OpNeqBasic)
+{
+  Vector<std::string> v1{"cat", "dog", "cow"};
+  Vector<std::string> v2{"cat", "dog", "ass"};
+  EXPECT_EQ(v1 != v2, true);
+  v2.pop_back();
+  v2.push_back("cow");
+  EXPECT_EQ(v1 != v2, false);
+}
+
