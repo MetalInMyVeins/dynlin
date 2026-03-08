@@ -78,11 +78,13 @@
     FRIEND_TEST(DynlinTest, AssignmentAfterModification); \
     FRIEND_TEST(DynlinTest, EmptyBasic); \
     FRIEND_TEST(DynlinTest, ClearInt); \
-    FRIEND_TEST(DynlinTest, ClearString);
+    FRIEND_TEST(DynlinTest, ClearString); \
+    FRIEND_TEST(DynlinTest, OpSubsIllegalIndex);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
 
+#include <cassert>
 #include <cstddef>
 
 template<typename T>
@@ -169,10 +171,12 @@ public:
   }
   T& operator[](size_t idx)
   {
+    assert(idx < mSize && "out of bound access is illegal");
     return *(mArr + idx);
   }
   const T& operator[](size_t idx) const
   {
+    assert(idx < mSize && "out of bound access is illegal");
     return *(mArr + idx);
   }
   size_t size() const

@@ -1035,3 +1035,9 @@ TEST(DynlinTest, ClearString)
   EXPECT_EQ(x.mArr, nullptr);
 }
 
+TEST(DynlinTest, OpSubsIllegalIndex)
+{
+  Vector<float> x{};
+  EXPECT_DEATH(x[123], ".*");
+}
+
