@@ -1060,3 +1060,11 @@ TEST(DynlinTest, OpNeqBasic)
   EXPECT_EQ(v1 != v2, false);
 }
 
+TEST(DynlinTest, ExtractBasic)
+{
+  Vector<std::string> v1{"cat", "dog", "cow", "multo", "lala", "pudding"};
+  Vector<std::string> v2{v1.extract(3, 5)};
+  Vector<std::string> temp{"multo", "lala", "pudding"};
+  EXPECT_EQ(v2, temp);
+}
+

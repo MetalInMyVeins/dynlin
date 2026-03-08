@@ -182,7 +182,7 @@ public:
     assert(idx < mSize && "out of bound access is illegal");
     return *(mArr + idx);
   }
-  bool operator==(const Dynlin<T>& other) const
+  bool operator==(const Dynlin& other) const
   {
     if (mSize != other.size())
       return false;
@@ -194,7 +194,7 @@ public:
     }
     return true;
   }
-  bool operator!=(const Dynlin<T>& other) const
+  bool operator!=(const Dynlin& other) const
   {
     for (size_t i{}; i < mSize; ++i)
     {
@@ -312,14 +312,13 @@ public:
       mRealSize = n;
     }
   }
-  Dynlin<T> extract(size_t i, size_t j)
+  Dynlin extract(size_t i, size_t j)
   {
-    assert((i > mSize or j > mSize) && "illegal index provided");
-    Dynlin<T> temp{};
-    temp.reserve(j - i + 1);
+    assert((i < mSize or j < mSize) && "illegal index provided");
+    Dynlin temp{};
     for (size_t idx{i}; idx < j + 1; ++idx)
     {
-      temp[idx] = *(mArr + idx);
+      temp.push_back(*(mArr + idx));
     }
     return temp;
   }
