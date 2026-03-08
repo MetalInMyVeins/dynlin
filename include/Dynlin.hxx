@@ -79,7 +79,8 @@
     FRIEND_TEST(DynlinTest, EmptyBasic); \
     FRIEND_TEST(DynlinTest, ClearInt); \
     FRIEND_TEST(DynlinTest, ClearString); \
-    FRIEND_TEST(DynlinTest, OpSubsIllegalIndex);
+    FRIEND_TEST(DynlinTest, OpSubsIllegalIndex); \
+    FRIEND_TEST(DynlinTest, ExtractBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
@@ -287,6 +288,17 @@ public:
       mSize = n;
       mRealSize = n;
     }
+  }
+  Dynlin<T> extract(size_t i, size_t j)
+  {
+    assert((i > mSize or j > mSize) && "illegal index provided");
+    Dynlin<T> temp{};
+    temp.reserve(j - i + 1);
+    for (size_t idx{i}; idx < j + 1; ++idx)
+    {
+      temp[idx] = *(mArr + idx);
+    }
+    return temp;
   }
   T* begin() const
   {
