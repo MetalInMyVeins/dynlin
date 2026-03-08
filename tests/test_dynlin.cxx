@@ -35,7 +35,7 @@ TEST(DynlinTest, LargeInit)
   Dynlin<int> arr{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
   EXPECT_EQ(arr.mSize, 15);
   EXPECT_EQ(arr.mRealSize, 30);
-  for (ull i = 0; i < 15; ++i)
+  for (size_t i = 0; i < 15; ++i)
   {
     EXPECT_EQ(arr[i], i + 1);
   }
@@ -51,7 +51,7 @@ TEST(DynlinTest, CopyConstructorNonConst)
   EXPECT_EQ(copy.mSize, original.mSize);
   EXPECT_NE(copy.mArr, original.mArr);
   
-  for (ull i = 0; i < original.size(); ++i)
+  for (size_t i = 0; i < original.size(); ++i)
   {
     EXPECT_EQ(copy[i], original[i]);
   }
@@ -93,8 +93,8 @@ TEST(DynlinTest, MoveConstructorBasic)
 {
   Dynlin<int> original{1, 2, 3, 4, 5};
   int* originalPtr = original.mArr;
-  ull originalSize = original.mSize;
-  ull originalCapacity = original.mRealSize;
+  size_t originalSize = original.mSize;
+  size_t originalCapacity = original.mRealSize;
   
   Dynlin<int> moved(std::move(original));
   
@@ -181,7 +181,7 @@ TEST(DynlinTest, MoveAssignmentBasic)
   Dynlin<int> arr2{4, 5, 6, 7, 8};
   
   int* arr2Ptr = arr2.mArr;
-  ull arr2Size = arr2.mSize;
+  size_t arr2Size = arr2.mSize;
   
   arr1 = std::move(arr2);
   
@@ -352,7 +352,7 @@ TEST(DynlinTest, MoveAfterOperations)
   arr1.reserve(50);
   
   int* ptr = arr1.mArr;
-  ull size = arr1.mSize;
+  size_t size = arr1.mSize;
   
   Dynlin<int> arr2(std::move(arr1));
   
@@ -404,7 +404,7 @@ TEST(DynlinTest, AssignmentOperator)
   EXPECT_EQ(arr1.mSize, 5);
   EXPECT_NE(arr1.mArr, arr2.mArr);
   
-  for (ull i = 0; i < arr2.size(); ++i)
+  for (size_t i = 0; i < arr2.size(); ++i)
   {
     EXPECT_EQ(arr1[i], arr2[i]);
   }
@@ -509,7 +509,7 @@ TEST(DynlinTest, PushBackMultipleToEmpty)
 TEST(DynlinTest, PushBackTriggersRealloc)
 {
   Dynlin<int> arr{1, 2, 3, 4};
-  ull oldCapacity = arr.mRealSize;
+  size_t oldCapacity = arr.mRealSize;
   
   arr.push_back(5, 6, 7, 8, 9);
   
@@ -523,7 +523,7 @@ TEST(DynlinTest, PushBackLarge)
   arr.push_back(2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
   
   EXPECT_EQ(arr.mSize, 20);
-  for (ull i = 0; i < 20; ++i)
+  for (size_t i = 0; i < 20; ++i)
   {
     EXPECT_EQ(arr[i], i + 1);
   }
@@ -636,7 +636,7 @@ TEST(DynlinTest, ReserveIncreasesCapacity)
 TEST(DynlinTest, ReserveLessThanSize)
 {
   Dynlin<int> arr{1, 2, 3, 4, 5};
-  ull oldCapacity = arr.mRealSize;
+  size_t oldCapacity = arr.mRealSize;
   
   arr.reserve(3);
   
@@ -705,7 +705,7 @@ TEST(DynlinTest, ResizeToZero)
 TEST(DynlinTest, ResizeSameSize)
 {
   Dynlin<int> arr{10, 20, 30};
-  ull oldSize = arr.mSize;
+  size_t oldSize = arr.mSize;
   
   arr.resize(3);
   
@@ -893,12 +893,12 @@ TEST(DynlinTest, StressCopyAndModify)
   
   Dynlin<int> copy(original);
   
-  for (ull i = 0; i < copy.size(); ++i)
+  for (size_t i = 0; i < copy.size(); ++i)
   {
     copy[i] *= 2;
   }
   
-  for (ull i = 0; i < original.size(); ++i)
+  for (size_t i = 0; i < original.size(); ++i)
   {
     EXPECT_EQ(original[i], i);
     EXPECT_EQ(copy[i], i * 2);

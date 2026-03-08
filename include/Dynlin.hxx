@@ -83,7 +83,7 @@
   #define DYNLIN_FRIEND_TESTS
 #endif
 
-typedef unsigned long long ull;
+#include <cstddef>
 
 template<typename T>
 class Dynlin
@@ -101,7 +101,7 @@ public:
       mRealSize{mSize * 2},
       mArr{new T[mRealSize]}
   {
-    for (ull i{}; i < mSize; ++i)
+    for (size_t i{}; i < mSize; ++i)
     {
       *(mArr + i) = *(other.mArr + i);
     }
@@ -111,7 +111,7 @@ public:
       mRealSize{mSize * 2},
       mArr{new T[mRealSize]}
   {
-    for (ull i{}; i < mSize; ++i)
+    for (size_t i{}; i < mSize; ++i)
     {
       *(mArr + i) = *(other.mArr + i);
     }
@@ -127,7 +127,7 @@ public:
       mSize = other.mSize;
       mRealSize = mSize * 2;
       mArr = new T[mRealSize];
-      for (ull i{}; i < mSize; ++i)
+      for (size_t i{}; i < mSize; ++i)
       {
         *(mArr + i) = *(other.mArr + i);
       }
@@ -167,19 +167,19 @@ public:
       mArr = nullptr;
     }
   }
-  T& operator[](ull idx)
+  T& operator[](size_t idx)
   {
     return *(mArr + idx);
   }
-  const T& operator[](ull idx) const
+  const T& operator[](size_t idx) const
   {
     return *(mArr + idx);
   }
-  ull size() const
+  size_t size() const
   {
     return mSize;
   }
-  ull capacity() const
+  size_t capacity() const
   {
     return mRealSize;
   }
@@ -200,7 +200,7 @@ public:
   template<typename... Args>
   void push_back(Args&&... args)
   {
-    ull nargs{sizeof...(args)};
+    size_t nargs{sizeof...(args)};
     T temp[]{static_cast<T>(args)...};
     if (mSize + nargs >= mRealSize)
     {
@@ -211,7 +211,7 @@ public:
     {
       mSize += nargs;
     }
-    for (ull i{}; i < nargs; ++i)
+    for (size_t i{}; i < nargs; ++i)
     {
       *(mArr + mSize - nargs + i) = temp[i];
     }
@@ -226,12 +226,12 @@ public:
     else
       return T{};
   }
-  void reserve(ull n)
+  void reserve(size_t n)
   {
     if (n <= mSize)
       return;
     T* temp{this->allocn(n)};
-    for (ull i{}; i < mSize; ++i)
+    for (size_t i{}; i < mSize; ++i)
     {
       *(temp + i) = *(mArr + i);
     }
@@ -240,18 +240,18 @@ public:
       delete[] mArr;
     mArr = temp;
   }
-  void resize(ull n)
+  void resize(size_t n)
   {
     if (n < mSize)
       mSize = n;
     else if (n > mSize)
     {
       T* temp{this->allocn(n)};
-      for (ull i{}; i < mSize; ++i)
+      for (size_t i{}; i < mSize; ++i)
       {
         *(temp + i) = *(mArr + i);
       }
-      for (ull i{mSize}; i < n; ++i)
+      for (size_t i{mSize}; i < n; ++i)
       {
         *(temp + i) = T{};
       }
@@ -262,18 +262,18 @@ public:
       mRealSize = n;
     }
   }
-  void resize(ull n, const T& fillval)
+  void resize(size_t n, const T& fillval)
   {
     if (n < mSize)
       mSize = n;
     else if (n > mSize)
     {
       T* temp{this->allocn(n)};
-      for (ull i{}; i < mSize; ++i)
+      for (size_t i{}; i < mSize; ++i)
       {
         *(temp + i) = *(mArr + i);
       }
-      for (ull i{mSize}; i < n; ++i)
+      for (size_t i{mSize}; i < n; ++i)
       {
         *(temp + i) = fillval;
       }
@@ -294,11 +294,11 @@ public:
   }
 
 private:
-  void realloc(ull n)
+  void realloc(size_t n)
   {
     mRealSize = (mSize + n) * 2;
     T* temp{new T[mRealSize]};
-    for (ull i{}; i < mSize; ++i)
+    for (size_t i{}; i < mSize; ++i)
     {
       *(temp + i) = *(mArr + i);
     }
@@ -306,15 +306,15 @@ private:
       delete[] mArr;
     mArr = temp;
   }
-  T* allocn(ull n)
+  T* allocn(size_t n)
   {
     T* temp{new T[n]};
     return temp;
   }
 
 private:
-  ull mSize{};
-  ull mRealSize{};
+  size_t mSize{};
+  size_t mRealSize{};
   T* mArr{nullptr};
 
 private:
