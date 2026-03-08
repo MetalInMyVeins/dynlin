@@ -63,7 +63,7 @@ TEST(DynlinTest, StressPushBack)
   
   EXPECT_EQ(arr.size(), 1000);
   
-  for (unsigned long long i = 0; i < 1000; ++i)
+  for (size_t i = 0; i < 1000; ++i)
   {
     EXPECT_EQ(arr[i], i);
   }

@@ -136,7 +136,7 @@ TEST(DynlinTest, MoveConstructorLarge)
   EXPECT_EQ(moved.mArr, originalPtr);
   EXPECT_EQ(moved.mSize, 100);
   
-  for (unsigned long long i = 0; i < 100; ++i)
+  for (size_t i = 0; i < 100; ++i)
   {
     EXPECT_EQ(moved[i], i);
   }
@@ -272,7 +272,7 @@ TEST(DynlinTest, MoveAssignmentLarge)
   EXPECT_EQ(arr1.mArr, arr2Ptr);
   EXPECT_EQ(arr1.mSize, 1000);
   
-  for (unsigned long long i = 0; i < 1000; ++i)
+  for (size_t i = 0; i < 1000; ++i)
   {
     EXPECT_EQ(arr1[i], i);
   }
