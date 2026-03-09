@@ -37,3 +37,18 @@ TEST(DynlinTest, ExtractBasic)
   EXPECT_DEATH(v1.extract(0, 999), "illegal index provided");
 }
 
+TEST(DynlinTest, RemoveBackBasic)
+{
+  Vector<int> x{2, 3, 4, 1, 2, 3};
+  x.remove_back(6);
+  EXPECT_EQ(x.empty(), true);
+  x.push_back(4, 5, 6, 7, 8);
+  EXPECT_EQ(x.size(), 5);
+  x.remove_back(2);
+  EXPECT_EQ(x.size(), 3);
+  EXPECT_EQ(x[0], 4);
+  EXPECT_EQ(x[1], 5);
+  EXPECT_EQ(x[2], 6);
+  EXPECT_DEATH(x[3], ".*");
+}
+

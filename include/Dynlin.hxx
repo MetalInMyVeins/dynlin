@@ -82,7 +82,8 @@
     FRIEND_TEST(DynlinTest, OpSubsIllegalIndex); \
     FRIEND_TEST(DynlinTest, OpEqEqBasic); \
     FRIEND_TEST(DynlinTest, OpNeqBasic); \
-    FRIEND_TEST(DynlinTest, ExtractBasic);
+    FRIEND_TEST(DynlinTest, ExtractBasic); \
+    FRIEND_TEST(DynlinTest, RemoveBackBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
@@ -321,6 +322,11 @@ public:
       temp.push_back(*(mArr + idx));
     }
     return temp;
+  }
+  void remove_back(size_t n)
+  {
+    assert(n <= mSize && "this many elements don't exist");
+    mSize -= n;
   }
   T* begin() const
   {
