@@ -82,5 +82,6 @@ TEST(DynlinTest, RemoveBasic)
   x.remove(0);
   x.remove(0);
   EXPECT_EQ(x.size(), 0);
+  EXPECT_DEATH(x.remove(0), ".*");
 }
 
