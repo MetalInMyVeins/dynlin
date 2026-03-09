@@ -130,9 +130,7 @@ public:
     if (this != &other)
     {
       if (mArr != nullptr)
-      {
         delete[] mArr;
-      }
       mSize = other.mSize;
       mRealSize = mSize * 2;
       mArr = new T[mRealSize];
