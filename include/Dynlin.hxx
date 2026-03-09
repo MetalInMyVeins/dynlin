@@ -318,6 +318,7 @@ public:
   {
     assert((i < mSize and j < mSize) && "illegal index provided");
     Dynlin temp{};
+    temp.reserve(j - i + 1);
     for (size_t idx{i}; idx < j + 1; ++idx)
     {
       temp.push_back(*(mArr + idx));
