@@ -83,7 +83,8 @@
     FRIEND_TEST(DynlinTest, OpEqEqBasic); \
     FRIEND_TEST(DynlinTest, OpNeqBasic); \
     FRIEND_TEST(DynlinTest, ExtractBasic); \
-    FRIEND_TEST(DynlinTest, RemoveBackBasic);
+    FRIEND_TEST(DynlinTest, RemoveBackBasic); \
+    FRIEND_TEST(DynlinTest, RemoveFrontBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
@@ -322,6 +323,17 @@ public:
       temp.push_back(*(mArr + idx));
     }
     return temp;
+  }
+  void remove_front(size_t n)
+  {
+    assert(n <= mSize && "this many elements don't exist");
+    Dynlin temp{};
+    temp.reserve(n);
+    for (size_t i{n}; i < mSize; ++i)
+      temp.push_back(*(mArr + i));
+    mSize -= n;
+    for (size_t i{}; i < mSize; ++i)
+      *(mArr + i) = temp[i];
   }
   void remove_back(size_t n)
   {
