@@ -85,7 +85,8 @@
     FRIEND_TEST(DynlinTest, ExtractBasic); \
     FRIEND_TEST(DynlinTest, RemoveBackBasic); \
     FRIEND_TEST(DynlinTest, RemoveFrontBasic); \
-    FRIEND_TEST(DynlinTest, RemoveBasic);
+    FRIEND_TEST(DynlinTest, RemoveBasic); \
+    FRIEND_TEST(DynlinTest, InsertBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
@@ -350,6 +351,20 @@ public:
       *(mArr + i) = *(mArr + i + 1);
     }
     --mSize;
+  }
+  void insert(size_t idx, const T& val)
+  {
+    assert(idx < mSize && "illegal index");
+    if (mSize >= mRealSize)
+    {
+      this->realloc(mSize);
+    }
+    ++mSize;
+    for (size_t i{mSize}; i > idx; --i)
+    {
+      *(mArr + i) = *(mArr + i - 1);
+    }
+    *(mArr + idx) = val;
   }
   T* begin() const
   {

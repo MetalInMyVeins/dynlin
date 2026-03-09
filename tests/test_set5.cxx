@@ -85,3 +85,16 @@ TEST(DynlinTest, RemoveBasic)
   EXPECT_DEATH(x.remove(0), ".*");
 }
 
+TEST(DynlinTest, InsertBasic)
+{
+  Vector<int> x{2, 3, 4};
+  x.insert(1, 58);
+  EXPECT_EQ(x[0], 2);
+  EXPECT_EQ(x[1], 58);
+  EXPECT_EQ(x[2], 3);
+  EXPECT_EQ(x[3], 4);
+  EXPECT_EQ(x.size(), 4);
+  x.clear();
+  EXPECT_DEATH(x.insert(0, 11), ".*");
+}
+
