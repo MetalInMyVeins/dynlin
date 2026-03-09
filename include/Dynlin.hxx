@@ -359,7 +359,8 @@ public:
     {
       this->realloc(mSize);
     }
-    ++mSize;
+    if (mSize < mRealSize)
+      ++mSize;
     for (size_t i{mSize}; i > idx; --i)
     {
       *(mArr + i) = *(mArr + i - 1);
