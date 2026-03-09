@@ -84,7 +84,8 @@
     FRIEND_TEST(DynlinTest, OpNeqBasic); \
     FRIEND_TEST(DynlinTest, ExtractBasic); \
     FRIEND_TEST(DynlinTest, RemoveBackBasic); \
-    FRIEND_TEST(DynlinTest, RemoveFrontBasic);
+    FRIEND_TEST(DynlinTest, RemoveFrontBasic); \
+    FRIEND_TEST(DynlinTest, RemoveBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
@@ -340,6 +341,15 @@ public:
   {
     assert(n <= mSize && "this many elements don't exist");
     mSize -= n;
+  }
+  void remove(size_t idx)
+  {
+    assert(idx < mSize && "illegal index");
+    for (size_t i{idx}; i < mSize - 1; ++i)
+    {
+      *(mArr + i) = *(mArr + i + 1);
+    }
+    --mSize;
   }
   T* begin() const
   {
