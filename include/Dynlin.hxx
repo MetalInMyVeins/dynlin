@@ -260,7 +260,7 @@ public:
   }
   void reserve(size_t n)
   {
-    if (n <= mSize)
+    if (n <= mRealSize)
       return;
     T* temp{this->allocn(n)};
     for (size_t i{}; i < mSize; ++i)
