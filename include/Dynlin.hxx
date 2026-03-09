@@ -314,7 +314,7 @@ public:
   }
   Dynlin extract(size_t i, size_t j)
   {
-    assert((i < mSize or j < mSize) && "illegal index provided");
+    assert((i < mSize and j < mSize) && "illegal index provided");
     Dynlin temp{};
     for (size_t idx{i}; idx < j + 1; ++idx)
     {

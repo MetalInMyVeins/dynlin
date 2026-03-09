@@ -6,7 +6,7 @@
 TEST(DynlinTest, OpSubsIllegalIndex)
 {
   Vector<float> x{};
-  EXPECT_DEATH(x[123], ".*");
+  EXPECT_DEATH(x[123], "out of bound access is illegal");
 }
 
 TEST(DynlinTest, OpEqEqBasic)
@@ -34,5 +34,6 @@ TEST(DynlinTest, ExtractBasic)
   Vector<std::string> v2{v1.extract(3, 5)};
   Vector<std::string> temp{"multo", "lala", "pudding"};
   EXPECT_EQ(v2, temp);
+  EXPECT_DEATH(v1.extract(0, 999), "illegal index provided");
 }
 
