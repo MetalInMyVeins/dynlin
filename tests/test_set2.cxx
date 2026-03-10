@@ -117,7 +117,7 @@ TEST(DynlinTest, Realloc1)
   int* temp{arr.mArr};
   arr.realloc(1);
   EXPECT_EQ(arr.mSize, 4);
-  EXPECT_EQ(arr.mRealSize, (arr.mSize + 1) * 2);
+  EXPECT_EQ(arr.mRealSize, arr.mSize * 2 + 1);
   EXPECT_NE(arr.mArr, temp);
 }
 
@@ -129,7 +129,7 @@ TEST(DynlinTest, Realloc2)
   int* temp{arr.mArr};
   arr.realloc(234);
   EXPECT_EQ(arr.mSize, 4);
-  EXPECT_EQ(arr.mRealSize, (arr.mSize + 234) * 2);
+  EXPECT_EQ(arr.mRealSize, arr.mSize * 2 + 234);
   EXPECT_NE(arr.mArr, temp);
 }
 

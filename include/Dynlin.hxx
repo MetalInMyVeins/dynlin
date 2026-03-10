@@ -379,7 +379,7 @@ public:
 private:
   void realloc(size_t n)
   {
-    mRealSize = (mSize + n) * 2;
+    mRealSize = mSize * 2 + n;
     T* temp{new T[mRealSize]};
     for (size_t i{}; i < mSize; ++i)
     {
