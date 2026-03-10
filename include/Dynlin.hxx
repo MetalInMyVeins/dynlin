@@ -383,7 +383,7 @@ private:
     T* temp{new T[mRealSize]};
     for (size_t i{}; i < mSize; ++i)
     {
-      *(temp + i) = *(mArr + i);
+      *(temp + i) = static_cast<T&&>(*(mArr + i));
     }
     if (mArr != nullptr)
       delete[] mArr;
