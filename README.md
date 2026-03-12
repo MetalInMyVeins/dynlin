@@ -1,7 +1,7 @@
 # Dynlin - Dynamic Line
 ![Tests](https://github.com/MetalInMyVeins/dynlin/actions/workflows/tests.yml/badge.svg)
 
-Standalone header-only `vector<T>` implementation.
+Standalone header-only `Vector<T>` implementation.
 
 # Features
 - copy constructor, copy assignment, move constructor, move assignment
