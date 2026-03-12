@@ -352,7 +352,7 @@ public:
       ++mSize;
     for (size_t i{mSize}; i > idx; --i)
     {
-      *(mArr + i) = *(mArr + i - 1);
+      *(mArr + i) = static_cast<T&&>(*(mArr + i - 1));
     }
     *(mArr + idx) = val;
   }
