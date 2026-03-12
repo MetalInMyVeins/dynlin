@@ -233,14 +233,8 @@ public:
     size_t nargs{sizeof...(args)};
     T temp[]{static_cast<T>(args)...};
     if (mSize + nargs >= mRealSize)
-    {
       this->realloc(nargs);
-      mSize += nargs;
-    }
-    else
-    {
-      mSize += nargs;
-    }
+    mSize += nargs;
     if (nargs == 1)
       *(mArr + mSize - nargs) = temp[0];
     for (size_t i{}; i < nargs; ++i)
