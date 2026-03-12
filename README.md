@@ -10,6 +10,8 @@ Standalone header-only `vector<T>` implementation.
 - pop_back
 - reserve
 - resize
-- subscript operator
-- iterator
+- insert (index based)
+- some kinds of removes (index based)
+- basic iterators
+- operator[]
 
