@@ -183,7 +183,7 @@ TEST(DynlinTest, ConstIterator)
   const Dynlin<int> arr{100, 200, 300};
   
   int sum = 0;
-  for (const int* it = arr.begin(); it != arr.end(); ++it)
+  for (const int* it = arr.cbegin(); it != arr.cend(); ++it)
   {
     sum += *it;
   }

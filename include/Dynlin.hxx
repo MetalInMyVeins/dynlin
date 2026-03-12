@@ -356,11 +356,19 @@ public:
     }
     *(mArr + idx) = val;
   }
-  T* begin() const
+  T* begin()
   {
     return mArr;
   }
-  T* end() const
+  T* end()
+  {
+    return (mArr + mSize);
+  }
+  const T* cbegin() const
+  {
+    return mArr;
+  }
+  const T* cend() const
   {
     return (mArr + mSize);
   }
