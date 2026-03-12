@@ -334,7 +334,7 @@ public:
   }
   void remove(size_t idx)
   {
-    assert(idx < mSize && "illegal index");
+    assert(idx < mSize && "illegal index for removal");
     for (size_t i{idx}; i < mSize - 1; ++i)
     {
       *(mArr + i) = *(mArr + i + 1);
@@ -343,7 +343,7 @@ public:
   }
   void insert(size_t idx, const T& val)
   {
-    assert(idx < mSize && "illegal index");
+    assert(idx < mSize && "illegal index for insertion");
     if (mSize >= mRealSize)
     {
       this->realloc(mSize);
