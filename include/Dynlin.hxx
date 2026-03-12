@@ -112,7 +112,7 @@ public:
   {
     for (size_t i{}; i < mSize; ++i)
     {
-      *(mArr + i) = *(other.mArr + i);
+      *(mArr + i) = static_cast<T&&>(*(other.mArr + i));
     }
   }
   Dynlin(const Dynlin& other)
@@ -122,7 +122,7 @@ public:
   {
     for (size_t i{}; i < mSize; ++i)
     {
-      *(mArr + i) = *(other.mArr + i);
+      *(mArr + i) = static_cast<T&&>(*(other.mArr + i));
     }
   }
   Dynlin& operator=(const Dynlin& other)
@@ -136,7 +136,7 @@ public:
       mArr = new T[mRealSize];
       for (size_t i{}; i < mSize; ++i)
       {
-        *(mArr + i) = *(other.mArr + i);
+        *(mArr + i) = static_cast<T&&>(*(other.mArr + i));
       }
     }
     return *this;
