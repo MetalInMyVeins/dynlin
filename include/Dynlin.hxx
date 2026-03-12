@@ -337,7 +337,7 @@ public:
     assert(idx < mSize && "illegal index for removal");
     for (size_t i{idx}; i < mSize - 1; ++i)
     {
-      *(mArr + i) = *(mArr + i + 1);
+      *(mArr + i) = static_cast<T&&>(*(mArr + i + 1));
     }
     --mSize;
   }
