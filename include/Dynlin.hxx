@@ -254,7 +254,7 @@ public:
     T* temp{this->allocn(n)};
     for (size_t i{}; i < mSize; ++i)
     {
-      *(temp + i) = *(mArr + i);
+      *(temp + i) = static_cast<T&&>(*(mArr + i));
     }
     mRealSize = n;
     if (mArr != nullptr)
@@ -270,11 +270,11 @@ public:
       T* temp{this->allocn(n)};
       for (size_t i{}; i < mSize; ++i)
       {
-        *(temp + i) = *(mArr + i);
+        *(temp + i) = static_cast<T&&>(*(mArr + i));
       }
       for (size_t i{mSize}; i < n; ++i)
       {
-        *(temp + i) = T{};
+        *(temp + i) = static_cast<T&&>(T{});
       }
       if (mArr != nullptr)
         delete[] mArr;
@@ -292,7 +292,7 @@ public:
       T* temp{this->allocn(n)};
       for (size_t i{}; i < mSize; ++i)
       {
-        *(temp + i) = *(mArr + i);
+        *(temp + i) = static_cast<T&&>(*(mArr + i));
       }
       for (size_t i{mSize}; i < n; ++i)
       {
