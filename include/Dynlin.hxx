@@ -231,16 +231,11 @@ public:
   void push_back(Args&&... args)
   {
     size_t nargs{sizeof...(args)};
-    T temp[]{static_cast<T>(args)...};
     if (mSize + nargs >= mRealSize)
       this->realloc(nargs);
+    size_t idx = mSize;
+    [[maybe_unused]] int dummy[]{(mArr[idx++] = static_cast<T&&>(args), 0)...};
     mSize += nargs;
-    if (nargs == 1)
-      *(mArr + mSize - nargs) = temp[0];
-    for (size_t i{}; i < nargs; ++i)
-    {
-      *(mArr + mSize - nargs + i) = temp[i];
-    }
   }
   T pop_back()
   {
