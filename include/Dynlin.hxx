@@ -86,7 +86,8 @@
     FRIEND_TEST(DynlinTest, RemoveBackBasic); \
     FRIEND_TEST(DynlinTest, RemoveFrontBasic); \
     FRIEND_TEST(DynlinTest, RemoveBasic); \
-    FRIEND_TEST(DynlinTest, InsertBasic);
+    FRIEND_TEST(DynlinTest, InsertBasic); \
+    FRIEND_TEST(DynlinTest, ReverseBasic);
 #else
   #define DYNLIN_FRIEND_TESTS
 #endif
