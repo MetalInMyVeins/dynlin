@@ -10,6 +10,7 @@ add_executable(dynlin_tests
   test_set3.cxx
   test_set4.cxx
   test_set5.cxx
+  test_set6.cxx
 )
 
 target_include_directories(dynlin_tests PRIVATE
